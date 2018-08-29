@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>创建订单</title>
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/jquery-weui.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/weui.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/swiper/swiper.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/public.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/style.css" />
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/jq/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/weui/jquery-weui.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/v.min.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/common.js" ></script>
+	</head>
+	<style>
+		.weui-cells{ margin-top: 0;}
+		.weui-label{ width: 135px;}
+		.weui-cell.over:before{ display: none;}
+		.weui-cell_select .weui-cell__bd:after{ display: none;}
+	</style>
+	<body>
+		<section id="app" class="mainSec" style="background: #f6f6f6;">
+		
+			<div style="padding: 0 15px 5px; color: #2E7DFF; font-size: 15px;">温馨提示 : 手机验证码已发到你的手机，请注意查收</div>
+			<div class="weui-cells">
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">手机验证码 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number"  pattern="[0-9]*" v-model="yzcode" placeholder="输入手机验证码">
+	                </div>
+	            </div>
+	        </div>
+	        <div class="tjBtn" @click="sendUp($event)" style="margin-top: 1.5rem;">提交</div>
+	        <!-- <div class="meng">
+	        	<p>请确保你的信用卡可用余额最低为{$firstAmt}元，否则将会还款失败哦
+	        </div> -->	        
+		</section>		
+	</body>
+</html>
+<script>
+	var app = new Vue({
+		el:'#app',
+		data:{			
+			ordersn:'{$ordersn}',			
+			yzcode:''			
+		},
+		methods:{		
+			sendUp:function(evt){
+				var self=this;	
+				if(self.yzcode.length<1){
+					$.toast('请输入手机验证码','text');
+					return false;
+				}
+				$.ajax({
+					url:"{:U('Portal/User/docreateorders')}",
+					data:{ordersn:self.ordersn,yzcode:self.yzcode},
+					type:'POST',
+					success:function(data)
+					{
+						if(data.status ==1)
+						{
+							$.toast("创建成功",'text',function(){
+								setTimeout(function(){
+									//跳转会员中心
+									location.href="{:U('Portal/index/getfhorder')}";
+								},500);
+							})
+						}else{
+							$.toast(data.msg,'text');
+						}
+					}
+				})
+			}
+		}
+	})
+	$(function(){
+		$.alert("请确保你的信用卡可用余额最低为{$firstAmt}元，否则将会还款失败哦", "提示", function() {
+		  //点击确认后的回调函数
+		});
+	})
+</script>
+
+
+
+
+

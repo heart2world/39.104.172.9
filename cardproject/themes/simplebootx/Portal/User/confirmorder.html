@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>预约下单</title>
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/jquery-weui.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/weui.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/swiper/swiper.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/public.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/style.css" />
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/jq/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/weui/jquery-weui.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/v.min.js" ></script>
+	    <script type="text/javascript" src="http://jqweui.com/dist/js/city-picker.js"></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/common.js" ></script>
+	</head>
+	<style>
+		.weui-cells{ margin-top: 0;}
+		.weui-label{ width: 135px;}
+		.weui-cell.over:before{ display: none;}
+		.weui-cell_select .weui-cell__bd:after{ display: none;}
+	</style>
+	<body>
+		<section id="app" class="mainSec" style="background: #f6f6f6;">
+		
+			<div class="center" style="padding: 5px 0;">填写信息</div>
+			<div class="weui-cells">
+				<div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">预约申请日期 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="text" id="datetime" readonly placeholder="格式：yyyy-MM-dd">
+	                </div>
+	            </div>   
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">代还费率(%) :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" pattern="[0-9]*" readonly value="{$persont}">
+	                </div>
+	            </div>
+	             <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">代还金额(元) :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number"  pattern="[0-9]*" v-model="money" placeholder="金额：最低1000.00">
+	                </div>
+	            </div>
+	        </div>
+	        <div class="tjBtn" @click="sendUp($event)" style="margin-top: 1.5rem;">提交</div>	        
+		</section>		
+	</body>
+</html>
+<script>
+	var app = new Vue({
+		el:'#app',
+		data:{			
+			id:'{$tdid}',			
+			money:'',     //手机号	
+		},
+		methods:{		
+			sendUp:function(evt){
+				var self=this;	
+				if($("#datetime").val().length==0){
+					$.toast('请输入预约申请日期','text');
+					return false;
+				}
+				if(self.money.length<1){
+					$.toast('请输入代还金额','text');
+					return false;
+				}
+				
+				console.log($("#datetime").val());
+				$.ajax({
+					url:"{:U('Portal/User/createorders')}",
+					data:{tdid:self.id,money:self.money,endDate:$("#datetime").val()},
+					type:'POST',
+					success:function(data)
+					{
+						if(data.status ==1)
+						{
+							$.toast("下单成功",'text',function(){
+								setTimeout(function(){
+									//跳转会员中心
+									location.href=data.url;
+								},500);
+							})
+						}else{
+							$.toast(data.msg,'text');
+						}
+					}
+				})
+			}
+		}
+	})
+	var picker=function(){
+		var times='{$nowday}';
+		$("#datetime").calendar({
+			minDate:times
+		});
+		
+	}
+	$(function(){
+		picker();
+
+	})
+</script>
+
+
+
+
+

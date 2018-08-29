@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>退费记录</title>
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/jquery-weui.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/weui.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/swiper/swiper.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/public.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/style.css" />
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/jq/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/weui/jquery-weui.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/v.min.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/common.js" ></script>
+	</head>
+	<style>
+		.weui-cells{ margin-top: 0;}
+		.weui-label{ width: 135px;}
+		.weui-cell.over:before{ display: none;}
+		.weui-cell_select .weui-cell__bd:after{ display: none;}
+	</style>
+	<body>
+		<section id="app" class="mainSec">
+			<div class="scoreList">
+				<div class="weui-cell" v-for="prop in list">
+	                <div class="weui-cell__bd">
+	                	<div class="disbox">
+	                		<div class="colorc disflex" v-text="prop.tit"></div>
+	                		<div class="colorc" v-text="prop.times"></div>
+	                	</div>
+	                	<div class="disbox">
+	                		<div class="disflex">支付号 : <span v-text="prop.payNum"></span></div>
+	                		<div>退费金额</div>
+	                	</div>
+	                    <div class="disbox">
+	                    	<div class="disflex">银行卡号 : <span v-text="prop.cardid"></span></div>
+	                    	<div><span v-text="prop.money"></span>元</div>
+	                    </div>
+	                    <div class="state right success" v-if="prop.state==1">退费成功</div>
+	                    <div class="state disbox fails" v-if="prop.state==2">
+	                    	<div class="disflex" v-text="prop.reason"></div>
+	                    	<div>退费失败</div>
+	                    </div>
+	                    <div class="state right loading" v-if="prop.state==3">退费中...</div>
+	                </div>
+	            </div>
+			</div>
+		</section>
+		
+	</body>
+</html>
+<script>
+
+	var app = new Vue({
+		el:'#app',
+		data:{
+			list:{$orderlist}
+		},
+		methods:{
+			
+		}
+	})
+</script>
+
+
+
+
+

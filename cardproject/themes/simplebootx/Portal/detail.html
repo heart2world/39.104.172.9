@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>订单确认</title>
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/jquery-weui.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/weui.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/swiper/swiper.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/public.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/style.css" />
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/jq/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/weui/jquery-weui.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/v.min.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/common.js" ></script>
+	</head>
+	<style>
+		.weui-cells{ margin-top: 0;}
+		.weui-label{ width: 135px;}
+		.weui-cell.over:before{ display: none;}
+		.weui-cell_select .weui-cell__bd:after{ display: none;}
+	</style>
+	<body>
+		<section id="app" class="mainSec" style="background: #f6f6f6;">
+			<form action="{:U('Portal/index/createorders2')}" id="formorders" method="POST">
+			<div style="padding: 0 15px 5px; color: #2E7DFF; font-size: 15px;">温馨提示 : 交易金额最低为{$info.mincoin}</div>
+			<div class="weui-cells">
+				<div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">收款方式 :</label></div>
+	                <div class="weui-cell__bd">	            
+	                    <input class="weui-input" type="text" readonly v-model="way">
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">交易金额(元) :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" name="coin" pattern="[0-9]*" v-model="money" placeholder="金额格式：500.00">
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">支付卡号 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" name="bankno" pattern="[0-9]*" v-model="num" placeholder="请输入支付卡号">
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd">
+	                	<label class="weui-label" style="width: 65px;">CVN2 :</label>
+	                </div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" pattern="[0-9]*" name="cvn2" v-model="cvn2" style="min-width: 80px;"  placeholder="">
+	                </div>
+		            <div class="weui-cell over" style="padding: 0 15px;">
+		                <div class="weui-cell__hd">
+		                	<label class="weui-label" style="width: 65px;">有效期 :</label>
+		                </div>
+		                <div class="weui-cell__bd">
+		                    <input class="weui-input" type="number" name="cardtime" pattern="[0-9]*" v-model="times" placeholder="">
+		                </div>
+		            </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">银行预留手机号 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" name="mobile" pattern="[0-9]*" v-model="mobile" placeholder="请输入预留手机号">
+	                </div>
+	            </div>
+	        </div>
+	        <div class="center" style="padding: 5px 0;">余量费用退至绑定卡</div>
+			<div class="weui-cells">
+	            <div class="weui-cell weui-cell_select weui-cell_select-after">
+	                <div class="weui-cell__hd"><label class="weui-label">退费卡银行 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <select class="weui-select" name="banksn" v-model="bank" @change="chosebank($event)">
+	                    	<volist name="bank" id="va">
+	                        <option value="{$va.banksn}">{$va.bankname}</option>
+	                        </volist>
+	                    </select>
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">退费卡卡号 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" name="bankcard" pattern="[0-9]*" v-model="cardid" placeholder="请输入退费卡卡号">
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">退费卡姓名 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="text" name="username" v-model="names" placeholder="请输入退费卡姓名">
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">退费人身份证 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="text" name="usercard" v-model="sfzid" placeholder="请输入退费人身份证">
+	                </div>
+	            </div>
+	        </div>
+	        <input type="hidden" name="optionid" value="{$info.id}">
+	        <div class="tjBtn" @click="sendUp($event)" style="margin-top: 1.5rem;">提交</div>
+	        </form>
+		</section>
+		
+	</body>
+</html>
+<script>
+
+	var app = new Vue({
+		el:'#app',
+		data:{
+			way:'{$info.name}',   //消费项目
+			id:'{$info.id}',
+			money:'{$uinfo.coin}',     //交易金额
+			num:'{$uinfo.bankno}',     //支付卡号
+			cvn2:'{$uinfo.cvn2}',      //cvn2
+			times:'{$uinfo.cardtime}',    //有效期
+			mobile:'{$uinfo.mobile}',     //银行预留手机号
+			bank:'{$uinfo.banksn}',    //退费卡银行
+			cardid:'{$uinfo.bankcard}',      //退费卡卡号
+			names:'{$uinfo.username}',    //退费人姓名
+			sfzid:'{$uinfo.usercard}',    //退费人身份证
+			minprice:'{$info.mincoin}',
+			maxprice:'{$info.maxcoin}'
+		},
+		methods:{
+			chose:function(evt){
+				var self=this;
+				console.log(self.bank)
+			},			
+			sendUp:function(evt){
+
+				var self=this;
+				var mobilestr ='/^1[3|4|5|7|8|9][0-9]{9}$/';
+				var money =Number(self.money);
+				console.log(money);
+				console.log(self.money);
+				if(self.way.length<1){
+					$.toast('请选择收款方式','text');
+					return false;
+				}
+				if(self.money.length<1){
+					$.toast('请输入交易金额','text');
+					return false;
+				}	
+				if(Number(self.money)<Number(self.minprice))
+				{
+					$.toast('交易金额超出限额','text');
+					return false;
+				}	
+				if(Number(self.money)>Number(self.maxprice))
+				{
+					$.toast('交易金额超出限额','text');
+					return false;
+				}			
+				if(self.num.length<1){
+					$.toast('请输入支付卡号','text');
+					return false;
+				}
+				if(self.cvn2.length<1){
+					$.toast('请输入cvn2','text');
+					return false;
+				}
+				if(self.times.length<1){
+					$.toast('请输入有效期','text');
+					return false;
+				}
+				if(self.mobile.length<1){
+					$.toast('请输入银行预留手机号','text');
+					return false;
+				}				
+				if(self.bank.length<1){
+					$.toast('请选择退费卡银行','text');
+					return false;
+				}
+				if(self.cardid.length<1){
+					$.toast('请输入退费卡号','text');
+					return false;
+				}
+				if(self.names.length<1){
+					$.toast('请输入退费卡姓名','text');
+					return false;
+				}
+				if(self.sfzid.length<1){
+					$.toast('请输入退费人身份证','text');
+					return false;
+				}
+
+				$("#formorders").submit();
+			}
+		}
+	})
+</script>
+
+
+
+
+

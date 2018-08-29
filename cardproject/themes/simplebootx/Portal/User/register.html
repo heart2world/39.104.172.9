@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>注册认证</title>
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/jquery-weui.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/weui.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/swiper/swiper.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/public.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/style.css" />
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/jq/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/weui/jquery-weui.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/v.min.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/common.js" ></script>
+	</head>
+	<style>
+		.weui-cells{ margin-top: 0;}
+		.weui-label{ width: 135px;}
+		.weui-cell.over:before{ display: none;}
+		.weui-cell_select .weui-cell__bd:after{ display: none;}
+	</style>
+	<body>
+		<section id="app" class="mainSec" style="background: #f6f6f6;">
+		
+			<div class="center" style="padding: 5px 0;">用户认证</div>
+			<div class="weui-cells">
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">姓名:</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="text"  v-model="username" placeholder="请输入姓名">
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">身份证号 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="text"  v-model="usercard" placeholder="请输入身份证号">
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">手机号 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" name="mobile" pattern="[0-9]*" v-model="mobile" placeholder="请输入手机号">
+	                </div>
+	            </div>
+	        </div>
+	      	<div class="center" style="padding: 5px 0;">绑定信用卡</div>
+	      	<div class="weui-cells">	
+	      		<div class="weui-cell weui-cell_select weui-cell_select-after">
+	                <div class="weui-cell__hd"><label class="weui-label">选择银行 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <select class="weui-select" name="banksn" v-model="bankname" @change="chosebank($event)">
+	                    	
+	                        <option value="中国工商银行">中国工商银行</option>
+	                        <option value="上海浦东发展银行">上海浦东发展银行</option>
+	                        <option value="兴业银行">兴业银行</option>
+	                        <option value="招商银行">招商银行</option>
+	                        <option value="中国民生银行">中国民生银行</option>
+	                        <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+	                        <option value="中信银行">中信银行</option>
+	                        <option value="上海银行">上海银行</option>
+	                        <option value="北京银行">北京银行</option>
+	                        <option value="广东发展银行">广东发展银行</option>
+	                        <option value="中国建设银行">中国建设银行</option>
+	                        <option value="交通银行">交通银行</option>
+	                        <option value="平安银行">平安银行</option>
+	                        <option value="中国光大银行">中国光大银行</option>
+	                        <option value="华夏银行">华夏银行</option>
+	                        <option value="中国农业银行">中国农业银行</option>
+	                    </select>
+	                </div>
+	            </div>
+	      		<div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">信用卡卡号 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" name="bankno" pattern="[0-9]*" v-model="bankno" placeholder="请输入信用卡卡号">
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd">
+	                	<label class="weui-label" style="width: 65px;">CVN2 :</label>
+	                </div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" pattern="[0-9]*" name="cvn2" v-model="cvn2" style="min-width: 80px;"  placeholder="">
+	                </div>
+		            <div class="weui-cell over" style="padding: 0 15px;">
+		                <div class="weui-cell__hd">
+		                	<label class="weui-label" style="width: 65px;">有效期 :</label>
+		                </div>
+		                <div class="weui-cell__bd">
+		                    <input class="weui-input" type="number" name="cardtime" pattern="[0-9]*" v-model="cardtime" placeholder="">
+		                </div>
+		            </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">银行预留手机号 :</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" name="creditmobile" pattern="[0-9]*" v-model="creditmobile" placeholder="请输入预留手机号">
+	                </div>
+	            </div>
+	        </div>
+	        <div class="tjBtn" @click="sendUp($event)" style="margin-top: 1.5rem;">提交</div>	        
+		</section>		
+	</body>
+</html>
+<script>
+	var app = new Vue({
+		el:'#app',
+		data:{			
+			id:'{$tdid}',			
+			mobile:'',     //手机号	
+			username:'',    //姓名
+			usercard:'',    //身份证
+			bankname:'',
+			bankno:'',
+			cvn2:'',
+			cardtime:'',
+			creditmobile:''
+		},
+		methods:{	
+			chosebank:function(evt){
+				var self=this;
+				console.log(self.bankname)
+			},		
+			sendUp:function(evt){
+				var self=this;	
+				if(self.username.length<1){
+					$.toast('请输入姓名','text');
+					return false;
+				}
+				if(self.usercard.length<1){
+					$.toast('请输入身份证号','text');
+					return false;
+				}
+				if(self.mobile.length<1){
+					$.toast('请输入手机号','text');
+					return false;
+				}
+				if(self.bankname.length<1){
+					$.toast('请选择信用卡银行','text');
+					return false;
+				}
+				if(self.bankno.length<1){
+					$.toast('请输入信用卡卡号','text');
+					return false;
+				}	
+				if(self.cvn2.length<1){
+					$.toast('请输入cvn码','text');
+					return false;
+				}	
+				if(self.cardtime.length<1){
+					$.toast('请输入有效期','text');
+					return false;
+				}	
+				if(self.creditmobile.length<1){
+					$.toast('请输入银行预留手机号','text');
+					return false;
+				}		
+				$.ajax({
+					url:"{:U('Portal/User/doregister')}",
+					data:{tdid:self.id,mobile:self.mobile,username:self.username,usercard:self.usercard,bankname:self.bankname,bankno:self.bankno,cvn2:self.cvn2,cardtime:self.cardtime,creditmobile:self.creditmobile},
+					type:'POST',
+					success:function(data)
+					{
+						if(data.status ==1)
+						{
+							$.toast("认证成功",'text',function(){
+								setTimeout(function(){
+									//跳转会员中心
+									location.href=data.url;
+								},500);
+							})
+						}else{
+							$.toast(data.msg,'text');
+						}
+					}
+				})
+			}
+		}
+	})
+</script>
+
+
+
+
+

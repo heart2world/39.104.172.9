@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>VIP兑换码</title>
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/jquery-weui.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/weui.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/swiper/swiper.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/public.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/style.css" />
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/jq/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/weui/jquery-weui.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/v.min.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/common.js" ></script>
+	</head>
+	<style>
+	</style>
+	<body>
+		<section id="app" class="mainSec">
+			<div style="padding: 0 15px 5px;font-size: 15px;"><a style="color: #2E7DFF;" href="{:U('Portal/index/getvip')}">没有兑换码？立即去获取-></a></div>
+			<div class="p1rem">
+				<div class="inputBox">
+					<input type="text" placeholder="请输入VIP兑换码" v-model="code" />
+				</div>
+				<div class="tjBtn" @click="duihuan($event)">提交</div>
+				<div class="fail" v-show="isok==0">兑换失败，VIP码不存在！</div>
+			</div>
+			<div class="meng" v-show="isok==1">
+				<div class="contents">
+					<div class="content">
+						<div class="center">
+							<i class="weui-icon-success weui-icon_msg"></i>
+						</div>
+						<p style="padding: .5rem 0 .3rem;">“兑换成功！”</p>
+						<p>您已成功获得VIP会员</p>
+					</div>
+					<div class="cancel" @click="cancel($event)"></div>
+				</div>
+			</div>
+		</section>
+		
+	</body>
+</html>
+<script>
+
+	var app = new Vue({
+		el:'#app',
+		data:{
+			code:'',     //兑换码
+			isok:-1,     //是否兑换成功（-1.默认状态，0.失败，1.成功）
+		},
+		methods:{
+			duihuan:function(evt){
+				var self=this;
+				if(self.code.length<1){
+					$.toast("请输入兑换码","text");
+					return
+				}
+				//ajax
+				$.ajax({
+					url:"{:U('Portal/index/dobdvip')}",
+					data:{code:self.code},
+					type:"post",
+					success:function(res)
+					{
+						app.code ='';
+						if(res.status ==1)
+						{
+							app.isok=1;
+						}else{
+							app.isok=0;
+						}
+					}
+
+				})
+				
+			},
+			cancel:function(evt){
+				var self=this;
+				self.isok=-1;
+				location.href="{:U('Portal/index/myvip')}";
+			}
+		}
+	})
+</script>
+
+
+
+
+

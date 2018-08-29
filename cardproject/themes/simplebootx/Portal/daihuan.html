@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>选择收款通道</title>
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/jquery-weui.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/weui.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/swiper/swiper.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/public.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/style.css" />
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/jq/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/weui/jquery-weui.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/v.min.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/common.js" ></script>
+	</head>
+	<style>
+		.weui-cells{ margin-top: 0;}
+		.weui-cells:after, .weui-cells:before{ display: none;}
+		.weui-cell:before{ left: 0;}
+		.weui-cells_checkbox .weui-check:checked+.weui-icon-checked:before{ color: #2E7DFF;}
+		.weui-check__label:active{ background-color: rgba(0,0,0,0);}
+	</style>
+	<body>
+		<section id="app" class="mainSec" style="background: #f6f6f6;">
+			<div class="weui-cells weui-cells_checkbox">
+				<volist name="tdlist" id="va">
+	            <label class="weui-cell weui-check__label">
+	            	<div class="weui-cell__hd"><img src="__PUBLIC__/app/img/card.png" alt="" style="width:60px;margin-right:5px;display:block"></div>
+	            	<div class="weui-cell__bd">
+	                    <p>{$va.tgname}</p>
+	                    <div style="color: #ddd; font-size: 15px;">
+	                    	手续费{$va.persont}%<if condition="$va['addpersont'] gt '0'">+{$va.addpersont}</if>元。{$va.tddesc}
+	                    </div>
+	               </div>
+	                <div class="weui-cell__hd">
+	                    <input type="radio" class="weui-check" name="checkbox1" @change="choseFn($event)" value="{$va.id}" v-model="chose">
+	                    <i class="weui-icon-checked"></i>
+	                </div>
+	            </label>
+	            </volist>
+	        </div>
+	        <div class="tjBtn" @click="nextStep($event)" style="margin-top: 3rem;">下一步</div>
+		</section>
+	</body>
+</html>
+<script>
+	var app = new Vue({
+		el:'#app',
+		data:{
+			chose:'',     //
+			isvip:'{$isvip}'
+		},
+		methods:{
+			choseFn:function(evt){
+				var self=this;
+				console.log(self.chose);
+			},
+			nextStep:function(evt){
+				var self=this;
+				if(self.chose.length<1){
+					$.toast("请选择收款通道","text");
+					return
+				}else{
+					if(self.isvip ==1)
+					{
+						location.href="{:U('Portal/index/nextorder')}"+"&tdid="+self.chose;
+					}else if(self.chose ==1 && self.isvip==0)
+					{
+						location.href="{:U('Portal/index/nextorder')}"+"&tdid="+self.chose;
+					}else{
+						$.toast("该收款通道仅限vip","text");
+						return
+					}				
+				}
+			}
+		}
+	})
+</script>
+
+
+
+
+

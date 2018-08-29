@@ -1,0 +1,48 @@
+
+
+body .weui-toast{ min-height: auto; margin-left: auto; margin-right: auto; width:-webkit-max-content;width: max-content; min-width: 7.6rem; max-width: 20rem;}
+body .weui-toast>p{ color: #fff;}
+
+body { background: #f6f6f6;}
+.mainSec{ margin-top: 10px; background: #fff;}
+
+/*VIP兑换码*/
+.inputBox{ border: 1px solid #efefef;}
+.inputBox input{ height: 2rem; line-height: 2rem; text-align: center;}
+.tjBtn{ width: 70%; margin: 4rem auto 0; border-radius: 20px; height: 2rem; line-height: 2rem; color: #fff; background: #2e7dff; text-align: center;}
+.fail{ color: #f00; text-align: center; padding: .5rem; font-size: 14px;}
+
+.meng{ position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: rgba(0,0,0,.2);}
+.meng .contents{ position: absolute; top: 20%; left: 10%; right: 10%;}
+.meng .content{ background: #fff; padding: 2rem; text-align: center;}
+.meng .weui-icon_msg{ font-size: 60px;}
+.meng .cancel{ width: 45px; height: 45px; background: url(../img/cancel.png) no-repeat; background-size: contain; margin: 3rem auto 0;}
+
+/*VIP有效期*/
+.line{ width: 100%; height: 8px; border-radius: 20px; background: -webkit-linear-gradient( left,#fb8687,#27aefd); overflow: hidden;}
+.line>div{ height: 10px; float: left; margin-top: -1px;}
+.line .opacity{ background: rgba(0,0,0,0); border-radius: 20px;}
+.line .cover{ background: #eee;}
+
+/*消费项目*/
+.title{ color: #9e9e9e; padding: 0px 15px 5px;}
+.title>a{ color: #9e9e9e;}
+.listUl .list{ background: #fff; margin-bottom: 10px;}
+.listUl .list .tit{ background: #2e7dff; color: #fff; padding: 10px 15px;}
+.listUl .list .content{ padding: 10px 15px; font-size: 15px;}
+.listUl .list .content>div{ padding: 3px 0;}
+.listUl .list .content>div span{ color: #9e9e9e;}
+
+/*退费记录*/
+.scoreList .disbox{ padding-bottom: 5px;}
+.scoreList .colorc{ color: #ccc;}
+.scoreList .weui-cell__ft{ color: #595959;}
+.scoreList .state.success{ color: #37c107;}
+.scoreList .state.fails{ color: #f00;}
+.scoreList .state.loading{ color: #f90;}
+
+
+
+
+
+

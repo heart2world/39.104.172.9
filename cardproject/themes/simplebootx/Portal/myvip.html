@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>VIP有效期</title>
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/jquery-weui.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/weui/weui.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/lib/swiper/swiper.min.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/public.css" />
+	    <link rel="stylesheet" href="__PUBLIC__/app/css/style.css" />
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/jq/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/lib/weui/jquery-weui.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/v.min.js" ></script>
+	    <script type="text/javascript" src="__PUBLIC__/app/js/common.js" ></script>
+	</head>
+	<style>
+	</style>
+	<body>
+		<section id="app" class="mainSec">
+			<div class="weui-cell">
+                <div class="weui-cell__hd"><img src="__PUBLIC__/app/img/VIP1.png" alt="" style="width:55px;margin-right:10px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>当前VIP等级</p>
+                </div>
+                <div class="weui-cell__ft">
+                	<if condition="$info['vipclass'] eq 1">
+                	<img src="__PUBLIC__/app/img/VIP.png" width="30" />
+                	<else/>
+                	<img src="__PUBLIC__/app/img/VIP2.png" width="30" />
+                	</if>
+                </div>
+            </div>
+            <div style="padding: 15px;">
+            	<p style="padding-bottom:  10px;">VIP有效期</p>
+            	<div class="line">
+            		<div class="opacity" style="width:{$qian}%;"></div>
+            		<div class="cover" style="width: {$hou}%;"></div>
+            	</div>
+            	<div class="right" style="font-size: 14px; padding-top: 5px;">({$info.endtime})到期</div>
+            </div>
+		</section>
+		
+	</body>
+</html>
+
+
+
+
+
+

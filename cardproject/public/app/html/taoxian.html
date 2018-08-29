@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>消费项目</title>
+	    <link rel="stylesheet" href="../lib/weui/jquery-weui.css" />
+	    <link rel="stylesheet" href="../lib/weui/weui.min.css" />
+	    <link rel="stylesheet" href="../lib/swiper/swiper.min.css" />
+	    <link rel="stylesheet" href="../css/public.css" />
+	    <link rel="stylesheet" href="../css/style.css" />
+	    <script type="text/javascript" src="../lib/jq/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="../lib/weui/jquery-weui.js" ></script>
+	    <script type="text/javascript" src="../js/v.min.js" ></script>
+	    <script type="text/javascript" src="../js/common.js" ></script>
+	</head>
+	<style>
+		.weui-cells{ margin-top: 0;}
+		.weui-cells:after, .weui-cells:before{ display: none;}
+		.weui-cell:before{ left: 0;}
+		.weui-cells_checkbox .weui-check:checked+.weui-icon-checked:before{ color: #2E7DFF;}
+		.weui-check__label:active{ background-color: rgba(0,0,0,0);}
+	</style>
+	<body>
+		<section id="app" class="mainSec" style="background: #f6f6f6;">
+			<div class="disbox title">
+				<div class="disflex">请选择项目</div>
+				<a href="javaScript:;">记录</a>
+			</div>
+			<div class="listUl">
+				<div class="list">
+					<div class="disbox tit">
+						<div class="disflex">航空机票A</div>
+						<div style="font-size: 15px;">费率:(0.48%)</div>
+					</div>
+					<div class="content">
+						<div class="disbox">
+							<div class="disflex"><span>单笔限额 : </span>2000~20000</div>
+							<div><span>开放时间 : </span>00:10~12:55</div>
+						</div>
+						<div><span>描述 : </span>建行单笔限额1万</div>
+					</div>
+				</div>
+				<div class="list">
+					<div class="disbox tit">
+						<div class="disflex">航空机票A</div>
+						<div style="font-size: 15px;">费率:(0.48%)</div>
+					</div>
+					<div class="content">
+						<div class="disbox">
+							<div class="disflex"><span>单笔限额 : </span>2000~20000</div>
+							<div><span>开放时间 : </span>00:10~12:55</div>
+						</div>
+						<div><span>描述 : </span>建行单笔限额1万</div>
+						<div class="center">该商户支持新用户首笔1000元以下加一免费</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>
+<script>
+
+	var app = new Vue({
+		el:'#app',
+		data:{
+			chose:'',     //选择的项
+		},
+		methods:{
+			choseFn:function(evt){
+				var self=this;
+				console.log(self.chose);
+			},
+			nextStep:function(evt){
+				var self=this;
+				if(self.chose.length<1){
+					$.toast("请选择收款通道","text");
+					return
+				}
+			}
+		}
+	})
+</script>
+
+
+
+
+
